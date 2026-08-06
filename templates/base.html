@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Instituto de Pesquisa Universitária{% endblock %}</title>
+  <meta name="description" content="Desenvolvemos soluções tecnológicas inovadoras através de pesquisa aplicada">
+
+  <!-- Tailwind via CDN: evita precisar de Node.js/build para reproduzir o mesmo visual do projeto original -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Ícones Lucide (os mesmos usados no projeto original em React) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-white text-gray-900">
+
+  {% include "includes/header.html" %}
+
+  {% block content %}{% endblock %}
+
+  {% include "includes/footer.html" %}
+
+  <script>
+    // Renderiza os ícones <i data-lucide="..."> como SVG (equivalente aos ícones lucide-react)
+    lucide.createIcons();
+  </script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

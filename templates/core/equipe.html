@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Nossa Equipe · Instituto de Pesquisa{% endblock %}
+
+{% block content %}
+<div class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Nossa Equipe</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Conheça os profissionais dedicados que fazem parte do nosso instituto, cada um contribuindo com sua
+        expertise para o desenvolvimento de soluções inovadoras.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {% for member in team %}
+      <div class="rounded-lg border bg-white shadow-sm hover:shadow-lg transition-shadow duration-300">
+        <div class="p-6 text-center">
+          <div class="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full bg-gray-100">
+            <img src="https://placehold.co/300x300" alt="{{ member.name }}" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-semibold">{{ member.name }}</h3>
+          <p class="text-blue-600 font-semibold text-sm mb-3">{{ member.role }}</p>
+          <p class="text-gray-600 mb-4 text-sm">{{ member.description }}</p>
+
+          <div class="mb-4 text-left">
+            <h4 class="font-semibold mb-2 text-sm">Especialidades:</h4>
+            <div class="flex flex-wrap gap-1">
+              {% for skill in member.skills %}
+              <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium">{{ skill }}</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="flex justify-center space-x-3">
+            <a href="mailto:{{ member.email }}" class="text-gray-600 hover:text-blue-600"><i data-lucide="mail" class="h-5 w-5"></i></a>
+            <a href="#" class="text-gray-600 hover:text-blue-600"><i data-lucide="linkedin" class="h-5 w-5"></i></a>
+            <a href="#" class="text-gray-600 hover:text-blue-600"><i data-lucide="github" class="h-5 w-5"></i></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

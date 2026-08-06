@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}Aprovação de Cotações{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 py-8">
+  <div class="container mx-auto px-4">
+
+    <div class="mb-8">
+      <div class="flex items-center space-x-3 mb-4">
+        <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+          <i data-lucide="file-text" class="h-6 w-6 text-white"></i>
+        </div>
+        <div>
+          <h1 class="text-3xl font-bold text-slate-900">Aprovação de Cotações</h1>
+          <p class="text-slate-600">Gerencie e aprove cotações recebidas dos fornecedores</p>
+        </div>
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+        <div class="mb-4 rounded-md border {% if message.tags == 'error' %}border-red-200 bg-red-50{% else %}border-green-200 bg-green-50{% endif %} px-4 py-3">
+          <p class="text-sm {% if message.tags == 'error' %}text-red-800{% else %}text-green-800{% endif %}">{{ message }}</p>
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-lg shadow-sm border">
+          <div class="text-2xl font-bold text-blue-600">{{ stats.total }}</div>
+          <div class="text-sm text-slate-600">Total de Cotações</div>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm border">
+          <div class="text-2xl font-bold text-green-600">{{ stats.aprovadas }}</div>
+          <div class="text-sm text-slate-600">Aprovadas</div>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm border">
+          <div class="text-2xl font-bold text-yellow-600">{{ stats.ressalva }}</div>
+          <div class="text-sm text-slate-600">Com Ressalva</div>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm border">
+          <div class="text-2xl font-bold text-slate-600">{{ stats.pendentes }}</div>
+          <div class="text-sm text-slate-600">Pendentes</div>
+        </div>
+      </div>
+    </div>
+
+    {# ---------- Filtros ---------- #}
+    <div class="rounded-lg border bg-white shadow-sm mb-6">
+      <div class="p-6">
+        <h2 class="flex items-center font-semibold text-lg mb-4">
+          <i data-lucide="filter" class="h-5 w-5 mr-2"></i> Filtros de Pesquisa
+        </h2>
+        <form method="get" class="grid md:grid-cols-6 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Data Início</label>
+            {{ filtro.data_inicio }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Data Fim</label>
+            {{ filtro.data_fim }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Projeto</label>
+            {{ filtro.projeto }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Status</label>
+            {{ filtro.status }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Fornecedor</label>
+            {{ filtro.fornecedor }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Nº Interno</label>
+            {{ filtro.numero_interno }}
+          </div>
+          <div class="md:col-span-6 flex space-x-2 pt-2">
+            <button type="submit" class="inline-flex items-center justify-center rounded-md bg-gray-900 text-white px-4 py-2 text-sm font-medium hover:bg-gray-800">
+              Aplicar Filtros
+            </button>
+            <a href="{% url 'cotacoes:aprovacao' %}" class="inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50">
+              Limpar Filtros
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {# ---------- Tabela de cotações ---------- #}
+    <div class="rounded-lg border bg-white shadow-sm">
+      <div class="p-6">
+        <h2 class="text-lg font-semibold">Cotações Recebidas</h2>
+        <p class="text-sm text-gray-500 mb-4">{{ quotations|length }} cotações encontradas</p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b bg-slate-50">
+                <th class="text-left p-3 font-semibold">Produto</th>
+                <th class="text-left p-3 font-semibold">Qtd</th>
+                <th class="text-left p-3 font-semibold">Valor Unit.</th>
+                <th class="text-left p-3 font-semibold">Moeda</th>
+                <th class="text-left p-3 font-semibold">Total</th>
+                <th class="text-left p-3 font-semibold">Prazo</th>
+                <th class="text-left p-3 font-semibold">Status</th>
+                <th class="text-left p-3 font-semibold">Fornecedor</th>
+                <th class="text-left p-3 font-semibold">Nº Interno</th>
+                <th class="text-left p-3 font-semibold">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for q in quotations %}
+              <tr class="border-b hover:bg-slate-50 transition-colors">
+                <td class="p-3">
+                  <div class="font-medium text-slate-900 max-w-[10rem] truncate" title="{{ q.produto }}">{{ q.produto }}</div>
+                  <div class="text-xs text-slate-500">{{ q.tipo }}</div>
+                </td>
+                <td class="p-3 text-center font-medium">{{ q.quantidade }}</td>
+                <td class="p-3 font-medium">{{ q.moeda }} {{ q.valor_unitario }}</td>
+                <td class="p-3 text-center font-mono">{{ q.moeda }}</td>
+                <td class="p-3 font-bold text-slate-900">{{ q.moeda }} {{ q.total }}</td>
+                <td class="p-3">{{ q.prazo }}</td>
+                <td class="p-3">
+                  {% if q.status == "aprovado" %}
+                    <span class="inline-flex items-center rounded-md bg-green-500 text-white px-2 py-1 text-xs font-medium">✓ Aprovado</span>
+                  {% elif q.status == "reprovado" %}
+                    <span class="inline-flex items-center rounded-md bg-red-500 text-white px-2 py-1 text-xs font-medium">✗ Reprovado</span>
+                  {% elif q.status == "ressalva" %}
+                    <span class="inline-flex items-center rounded-md bg-yellow-500 text-white px-2 py-1 text-xs font-medium">⚠ Com Ressalva</span>
+                  {% else %}
+                    <span class="inline-flex items-center rounded-md border border-blue-500 text-blue-600 px-2 py-1 text-xs font-medium">⏳ Pendente</span>
+                  {% endif %}
+                </td>
+                <td class="p-3"><div class="max-w-[10rem] truncate font-medium">{{ q.fornecedor }}</div></td>
+                <td class="p-3 font-mono text-xs">{{ q.numero_interno }}</td>
+                <td class="p-3">
+                  {# "modal" simples via <details>, sem precisar de JavaScript #}
+                  <details class="relative">
+                    <summary class="list-none inline-flex items-center justify-center rounded-md border px-2 py-1 text-xs cursor-pointer hover:bg-gray-50">
+                      <i data-lucide="eye" class="h-4 w-4"></i>
+                    </summary>
+                    <div class="absolute right-0 z-10 mt-2 w-96 rounded-lg border bg-white shadow-xl p-4">
+                      <h3 class="font-semibold mb-1">Análise de Cotação</h3>
+                      <p class="text-sm text-gray-500 mb-3">{{ q.produto }} — {{ q.fornecedor }}</p>
+
+                      <div class="grid grid-cols-2 gap-2 p-3 bg-slate-50 rounded-lg text-xs mb-3">
+                        <div><span class="text-slate-500">Nº Interno:</span> <span class="font-mono">{{ q.numero_interno }}</span></div>
+                        <div><span class="text-slate-500">Recebido em:</span> {{ q.data_recebimento|date:"d/m/Y" }}</div>
+                        <div><span class="text-slate-500">Validade:</span> {{ q.validade_cotacao|date:"d/m/Y" }}</div>
+                        <div><span class="text-slate-500">Pagamento:</span> {{ q.condicoes_pagamento }}</div>
+                      </div>
+
+                      <div class="text-sm mb-3 space-y-1">
+                        <div>Valor unitário: <span class="font-medium">{{ q.moeda }} {{ q.valor_unitario }}</span></div>
+                        <div>Frete: <span class="font-medium">{{ q.moeda }} {{ q.frete }}</span></div>
+                        <div>Alfândega: <span class="font-medium">{{ q.moeda }} {{ q.alfandega }}</span></div>
+                        <div>Desconto: <span class="font-medium">{{ q.desconto }}%</span></div>
+                        <div class="font-bold pt-1 border-t">Total: {{ q.moeda }} {{ q.total }}</div>
+                      </div>
+
+                      {% if q.observacoes %}
+                      <div class="mb-3 p-2 bg-blue-50 rounded text-xs">{{ q.observacoes }}</div>
+                      {% endif %}
+
+                      <form method="post" action="{% url 'cotacoes:aprovar_cotacao' q.pk %}" class="space-y-3 border-t pt-3">
+                        {% csrf_token %}
+                        <div>
+                          <label class="block text-xs font-medium mb-1">Status da Aprovação</label>
+                          <select name="status" class="flex h-9 w-full rounded-md border border-gray-300 px-2 text-sm">
+                            <option value="aprovado" {% if q.status == "aprovado" %}selected{% endif %}>Aprovar</option>
+                            <option value="reprovado" {% if q.status == "reprovado" %}selected{% endif %}>Reprovar</option>
+                            <option value="ressalva" {% if q.status == "ressalva" %}selected{% endif %}>Aprovar com Ressalva</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label class="block text-xs font-medium mb-1">Justificativa</label>
+                          <textarea name="justificativa" rows="2" class="flex w-full rounded-md border border-gray-300 px-2 py-1 text-sm">{{ q.justificativa }}</textarea>
+                        </div>
+                        <div>
+                          <label class="block text-xs font-medium mb-1">Observações adicionais</label>
+                          <textarea name="observacoes" rows="2" class="flex w-full rounded-md border border-gray-300 px-2 py-1 text-sm">{{ q.observacoes }}</textarea>
+                        </div>
+                        <button type="submit" class="w-full inline-flex items-center justify-center rounded-md bg-gray-900 text-white px-4 py-2 text-sm font-medium hover:bg-gray-800">
+                          Confirmar Decisão
+                        </button>
+                      </form>
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="10" class="text-center py-12 text-slate-500">
+                  Nenhuma cotação encontrada. Ajuste os filtros para ver mais resultados.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

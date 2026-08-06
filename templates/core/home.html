@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+
+  {# ---------- Hero (components/hero.tsx) ---------- #}
+  <section class="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="font-semibold text-white">
+          <div class="flex items-center space-x-2 mb-6">
+            <i data-lucide="rocket" class="h-8 w-8 text-white"></i>
+            <span class="font-semibold text-white">Avante!!!</span>
+          </div>
+
+          <h1 class="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            Equipe de
+            <span class="text-blue-300 block">Pesquisa Universitária</span>
+          </h1>
+
+          <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+            Desenvolvemos soluções tecnológicas inovadoras através de pesquisa aplicada, conectando academia e
+            indústria para transformar conhecimento em impacto social.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <a href="{% url 'core:admin_login' %}"
+               class="inline-flex items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-lg font-medium transition-colors">
+              Área Administrativa
+              <i data-lucide="arrow-right" class="ml-2 h-5 w-5"></i>
+            </a>
+            <a href="{% url 'core:contato' %}"
+               class="inline-flex items-center justify-center rounded-md border border-blue-300 text-blue-300 hover:bg-blue-800 px-6 py-3 text-lg font-medium transition-colors">
+              Entre em Contato
+            </a>
+          </div>
+
+          <div class="grid grid-cols-3 gap-6 pt-8 border-t border-blue-700">
+            <div class="text-center">
+              <i data-lucide="users" class="h-8 w-8 text-blue-300 mx-auto mb-2"></i>
+              <p class="text-sm text-blue-200">Equipe Especializada</p>
+            </div>
+            <div class="text-center">
+              <i data-lucide="book-open" class="h-8 w-8 text-blue-300 mx-auto mb-2"></i>
+              <p class="text-sm text-blue-200">Pesquisa Aplicada</p>
+            </div>
+            <div class="text-center">
+              <i data-lucide="building" class="h-8 w-8 text-blue-300 mx-auto mb-2"></i>
+              <p class="text-sm text-blue-200">Parcerias Estratégicas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute inset-0 bg-blue-600 rounded-lg transform rotate-6 opacity-45"></div>
+          <img src="https://placehold.co/600x500?text=Instituto+de+Pesquisa" alt="Instituto de Pesquisa"
+               class="relative rounded-lg shadow-2xl">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ---------- Quick Links (components/quick-links.tsx) ---------- #}
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Acesso Rápido</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Navegue pelas principais seções do nosso instituto e descubra nosso trabalho
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for link in quick_links %}
+        <div class="rounded-lg border bg-white shadow-sm hover:shadow-lg transition-shadow duration-300">
+          <div class="p-6">
+            <div class="w-12 h-12 rounded-lg {{ link.color }} flex items-center justify-center mb-4">
+              <i data-lucide="{{ link.icon }}" class="h-6 w-6"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-1">{{ link.title }}</h3>
+            <p class="text-gray-500 text-sm mb-4">{{ link.description }}</p>
+            <a href="{% url link.url_name %}"
+               class="flex items-center justify-between w-full rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-100 transition-colors">
+              Acessar
+              <i data-lucide="arrow-right" class="h-4 w-4"></i>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {# ---------- News Section (components/news-section.tsx) ---------- #}
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Notícias e Atualizações</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Fique por dentro das últimas novidades, projetos e conquistas do nosso instituto
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {% for item in noticias %}
+        <div class="rounded-lg border bg-white shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+          <div class="aspect-video overflow-hidden bg-gray-100">
+            {% if item.imagem %}
+              <img src="{{ item.imagem.url }}" alt="{{ item.titulo }}"
+                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+            {% else %}
+              <img src="https://placehold.co/300x200?text=Noticia" alt="{{ item.titulo }}"
+                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+            {% endif %}
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium">{{ item.categoria }}</span>
+              <div class="flex items-center text-sm text-gray-500">
+                <i data-lucide="calendar" class="h-4 w-4 mr-1"></i>
+                {{ item.data }}
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 line-clamp-2">{{ item.titulo }}</h3>
+            <p class="text-gray-500 text-sm line-clamp-3 mb-4">{{ item.descricao }}</p>
+            <button class="flex items-center justify-between w-full rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-100 transition-colors">
+              Ler mais
+              <i data-lucide="arrow-right" class="h-4 w-4"></i>
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="text-center">
+        <a href="{% url 'core:publicacoes' %}"
+           class="inline-flex items-center justify-center rounded-md border px-6 py-3 text-lg font-medium hover:bg-gray-50 transition-colors">
+          Ver todas as notícias
+          <i data-lucide="arrow-right" class="ml-2 h-4 w-4"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock %}

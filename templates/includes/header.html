@@ -1,0 +1,74 @@
+<header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="{% url 'core:home' %}" class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-sm">IPU</span>
+        </div>
+        <span class="font-bold text-xl text-gray-900">Instituto de Pesquisa</span>
+      </a>
+
+      <!-- Navegação desktop -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="{% url 'core:home' %}" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center space-x-1">
+          <i data-lucide="home" class="h-4 w-4"></i><span>Início</span>
+        </a>
+        <a href="{% url 'core:equipe' %}" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center space-x-1">
+          <i data-lucide="users" class="h-4 w-4"></i><span>Equipe</span>
+        </a>
+        <a href="{% url 'core:projetos' %}" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center space-x-1">
+          <i data-lucide="folder-open" class="h-4 w-4"></i><span>Projetos</span>
+        </a>
+        <a href="{% url 'core:sistemas' %}" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center space-x-1">
+          <i data-lucide="settings" class="h-4 w-4"></i><span>Sistemas/Ferramentas</span>
+        </a>
+        <a href="{% url 'core:publicacoes' %}" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center space-x-1">
+          <i data-lucide="file-text" class="h-4 w-4"></i><span>Publicações/Notícias</span>
+        </a>
+        <a href="{% url 'core:contato' %}" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center space-x-1">
+          <i data-lucide="phone" class="h-4 w-4"></i><span>Contato</span>
+        </a>
+      </nav>
+
+      <!-- Botão Admin -->
+      <div class="hidden md:flex">
+        <a href="{% url 'core:admin_login' %}" class="inline-flex items-center justify-center rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium hover:bg-gray-50 transition-colors">
+          Admin
+        </a>
+      </div>
+
+      <!-- Botão do menu mobile: usamos <details>/<summary> pra ter o "abre/fecha" sem precisar de JavaScript -->
+      <details class="md:hidden relative">
+        <summary class="list-none p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 cursor-pointer">
+          <i data-lucide="menu" class="h-6 w-6"></i>
+        </summary>
+        <nav class="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg py-2 flex flex-col">
+          <a href="{% url 'core:home' %}" class="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
+            <i data-lucide="home" class="h-4 w-4"></i><span>Início</span>
+          </a>
+          <a href="{% url 'core:equipe' %}" class="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
+            <i data-lucide="users" class="h-4 w-4"></i><span>Equipe</span>
+          </a>
+          <a href="{% url 'core:projetos' %}" class="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
+            <i data-lucide="folder-open" class="h-4 w-4"></i><span>Projetos</span>
+          </a>
+          <a href="{% url 'core:sistemas' %}" class="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
+            <i data-lucide="settings" class="h-4 w-4"></i><span>Sistemas/Ferramentas</span>
+          </a>
+          <a href="{% url 'core:publicacoes' %}" class="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
+            <i data-lucide="file-text" class="h-4 w-4"></i><span>Publicações/Notícias</span>
+          </a>
+          <a href="{% url 'core:contato' %}" class="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
+            <i data-lucide="phone" class="h-4 w-4"></i><span>Contato</span>
+          </a>
+          <div class="px-4 py-2">
+            <a href="{% url 'core:admin_login' %}" class="block text-center w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium hover:bg-gray-50">
+              Admin
+            </a>
+          </div>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

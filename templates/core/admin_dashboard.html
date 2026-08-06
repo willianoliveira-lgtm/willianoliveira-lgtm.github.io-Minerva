@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}Painel Administrativo{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Abas sem JavaScript: cada input rádio "liga" a aba correspondente via CSS irmão (~) */
+  .tabs input[type="radio"] { display: none; }
+  .tab-content { display: none; }
+  #tab-cotacao:checked ~ .tabs-body #content-cotacao,
+  #tab-content:checked ~ .tabs-body #content-content,
+  #tab-files:checked ~ .tabs-body #content-files,
+  #tab-agenda:checked ~ .tabs-body #content-agenda,
+  #tab-settings:checked ~ .tabs-body #content-settings { display: block; }
+
+  .tab-label { cursor: pointer; }
+  #tab-cotacao:checked ~ .tabs label[for="tab-cotacao"],
+  #tab-content:checked ~ .tabs label[for="tab-content"],
+  #tab-files:checked ~ .tabs label[for="tab-files"],
+  #tab-agenda:checked ~ .tabs label[for="tab-agenda"],
+  #tab-settings:checked ~ .tabs label[for="tab-settings"] {
+    background: white; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<input type="radio" name="admin-tabs" id="tab-cotacao" checked>
+<input type="radio" name="admin-tabs" id="tab-content">
+<input type="radio" name="admin-tabs" id="tab-files">
+<input type="radio" name="admin-tabs" id="tab-agenda">
+<input type="radio" name="admin-tabs" id="tab-settings">
+
+<div class="min-h-screen bg-gray-50">
+  <div class="bg-white shadow-sm border-b">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Painel Administrativo</h1>
+          <p class="text-gray-600">Sistema de Gestão Institucional</p>
+        </div>
+        <form method="post" action="{% url 'core:logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50">
+            <i data-lucide="log-out" class="h-4 w-4 mr-2"></i> Sair
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8">
+
+    <div class="tabs grid grid-cols-5 gap-1 bg-gray-100 rounded-md p-1 mb-6 text-sm font-medium text-gray-600">
+      <label for="tab-cotacao" class="tab-label text-center rounded-md py-2">Cotação</label>
+      <label for="tab-content" class="tab-label text-center rounded-md py-2">Conteúdo</label>
+      <label for="tab-files" class="tab-label text-center rounded-md py-2">Arquivos</label>
+      <label for="tab-agenda" class="tab-label text-center rounded-md py-2">Agenda</label>
+      <label for="tab-settings" class="tab-label text-center rounded-md py-2">Configurações</label>
+    </div>
+
+    <div class="tabs-body">
+
+      {# ---------- Aba Cotação ---------- #}
+      <div id="content-cotacao" class="tab-content space-y-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="rounded-lg border bg-white shadow-sm hover:shadow-lg transition-shadow">
+            <div class="p-6">
+              <h3 class="flex items-center font-semibold text-lg mb-1">
+                <i data-lucide="check-circle" class="h-5 w-5 mr-2 text-green-600"></i> Aprovação do Cotador
+              </h3>
+              <p class="text-gray-500 text-sm mb-4">Gerencie e aprove cotações recebidas dos fornecedores</p>
+              <a href="{% url 'cotacoes:aprovacao' %}" class="block w-full text-center rounded-md bg-green-600 hover:bg-green-700 text-white px-4 py-2 text-sm font-medium">
+                Acessar Aprovações
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-white shadow-sm hover:shadow-lg transition-shadow">
+            <div class="p-6">
+              <h3 class="flex items-center font-semibold text-lg mb-1">
+                <i data-lucide="shopping-cart" class="h-5 w-5 mr-2 text-blue-600"></i> Compra do Item
+              </h3>
+              <p class="text-gray-500 text-sm mb-4">Itens comprados com base nas cotações aprovadas</p>
+              <a href="{% url 'cotacoes:compras' %}" class="block w-full text-center rounded-md bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-medium">
+                Gerenciar Compras
+              </a>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-white shadow-sm hover:shadow-lg transition-shadow">
+            <div class="p-6">
+              <h3 class="flex items-center font-semibold text-lg mb-1">
+                <i data-lucide="bar-chart-3" class="h-5 w-5 mr-2 text-purple-600"></i> Relatórios
+              </h3>
+              <p class="text-gray-500 text-sm mb-4">Relatórios e análises do sistema de cotação</p>
+              <a href="{% url 'admin:index' %}" class="block w-full text-center rounded-md bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 text-sm font-medium">
+                Ver Relatórios
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {# ---------- Estatísticas reais (vindas do banco) ---------- #}
+        <div class="grid md:grid-cols-4 gap-6">
+          <div class="rounded-lg border bg-white shadow-sm p-6">
+            <div class="flex items-center">
+              <div class="p-2 bg-blue-100 rounded-lg"><i data-lucide="file-text" class="h-6 w-6 text-blue-600"></i></div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-600">Cotações Pendentes</p>
+                <p class="text-2xl font-bold text-gray-900">{{ stats.pendentes }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-lg border bg-white shadow-sm p-6">
+            <div class="flex items-center">
+              <div class="p-2 bg-green-100 rounded-lg"><i data-lucide="check-circle" class="h-6 w-6 text-green-600"></i></div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-600">Aprovadas</p>
+                <p class="text-2xl font-bold text-gray-900">{{ stats.aprovadas }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-lg border bg-white shadow-sm p-6">
+            <div class="flex items-center">
+              <div class="p-2 bg-orange-100 rounded-lg"><i data-lucide="shopping-cart" class="h-6 w-6 text-orange-600"></i></div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-600">Compras Realizadas</p>
+                <p class="text-2xl font-bold text-gray-900">{{ stats.compras }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-lg border bg-white shadow-sm p-6">
+            <div class="flex items-center">
+              <div class="p-2 bg-purple-100 rounded-lg"><i data-lucide="bar-chart-3" class="h-6 w-6 text-purple-600"></i></div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-600">Valor Total Comprado</p>
+                <p class="text-2xl font-bold text-gray-900">{{ stats.valor_total }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {# ---------- Aba Conteúdo ---------- #}
+      <div id="content-content" class="tab-content">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="rounded-lg border bg-white shadow-sm p-6">
+            <h3 class="flex items-center font-semibold text-lg mb-1"><i data-lucide="file-text" class="h-5 w-5 mr-2"></i> Publicações</h3>
+            <p class="text-gray-500 text-sm mb-4">Gerenciar artigos e notícias</p>
+            <a href="{% url 'admin:core_noticia_add' %}" class="block w-full text-center rounded-md bg-gray-900 text-white px-4 py-2 text-sm font-medium hover:bg-gray-800">Adicionar Publicação</a>
+          </div>
+          <div class="rounded-lg border bg-white shadow-sm p-6">
+            <h3 class="flex items-center font-semibold text-lg mb-1"><i data-lucide="users" class="h-5 w-5 mr-2"></i> Equipe</h3>
+            <p class="text-gray-500 text-sm mb-4">Gerenciar membros da equipe</p>
+            <p class="text-xs text-slate-400">Ainda em lista fixa no código (veremos na Fase 4b: mover Equipe para o banco).</p>
+          </div>
+          <div class="rounded-lg border bg-white shadow-sm p-6">
+            <h3 class="flex items-center font-semibold text-lg mb-1"><i data-lucide="database" class="h-5 w-5 mr-2"></i> Projetos</h3>
+            <p class="text-gray-500 text-sm mb-4">Gerenciar projetos ativos</p>
+            <p class="text-xs text-slate-400">Ainda em lista fixa no código (idem).</p>
+          </div>
+        </div>
+      </div>
+
+      {# ---------- Aba Arquivos ---------- #}
+      <div id="content-files" class="tab-content">
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h3 class="flex items-center font-semibold text-lg mb-1"><i data-lucide="upload" class="h-5 w-5 mr-2"></i> Upload de Arquivos</h3>
+          <p class="text-gray-500 text-sm mb-4">Envie comprovantes de compras em "Cotação → Compras", ou notícias pelo painel /admin/.</p>
+          <a href="{% url 'admin:core_noticia_add' %}" class="inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50">
+            Ir para o Admin do Django
+          </a>
+        </div>
+      </div>
+
+      {# ---------- Aba Agenda ---------- #}
+      <div id="content-agenda" class="tab-content">
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h3 class="flex items-center font-semibold text-lg mb-1"><i data-lucide="calendar" class="h-5 w-5 mr-2"></i> Agenda Compartilhada</h3>
+          <p class="text-gray-500 text-sm mb-4">Gerenciar eventos e reuniões da equipe</p>
+          <div class="border rounded-lg p-4">
+            <h4 class="font-semibold">Próximos Eventos</h4>
+            <p class="text-sm text-gray-600 mt-2">Nenhum evento agendado (funcionalidade ainda não migrada — fica pra uma próxima fase).</p>
+          </div>
+        </div>
+      </div>
+
+      {# ---------- Aba Configurações ---------- #}
+      <div id="content-settings" class="tab-content">
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h3 class="font-semibold text-lg mb-1">Configurações do Site</h3>
+          <p class="text-gray-500 text-sm mb-4">Gerenciamento de usuários já é nativo do Django</p>
+          <div class="space-y-3">
+            <a href="{% url 'admin:auth_user_changelist' %}" class="block w-full text-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50">
+              Gerenciar Usuários
+            </a>
+            <a href="{% url 'admin:index' %}" class="block w-full text-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50">
+              Abrir Django Admin completo
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

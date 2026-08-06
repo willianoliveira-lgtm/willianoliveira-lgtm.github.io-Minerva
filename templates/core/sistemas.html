@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Sistemas e Ferramentas · Instituto de Pesquisa{% endblock %}
+
+{% block content %}
+<div class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Sistemas e Ferramentas</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Conheça os sistemas desenvolvidos pela nossa equipe para otimizar processos institucionais e facilitar o
+        trabalho acadêmico.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2 mb-8">
+      <span class="inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium cursor-pointer hover:bg-gray-100">Todos</span>
+      {% for category in categories %}
+      <span class="inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium cursor-pointer hover:bg-gray-100">{{ category }}</span>
+      {% endfor %}
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for system in systems %}
+      <div class="rounded-lg border bg-white shadow-sm hover:shadow-lg transition-shadow duration-300">
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+              <i data-lucide="{{ system.icon }}" class="h-6 w-6 text-blue-600"></i>
+            </div>
+            <span class="inline-flex items-center rounded-md {{ system.status_color }} text-white px-2 py-1 text-xs font-medium">{{ system.status }}</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-1">{{ system.name }}</h3>
+          <p class="text-gray-500 text-sm mb-4">{{ system.description }}</p>
+
+          <div class="space-y-4">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Categoria:</span>
+              <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium">{{ system.category }}</span>
+            </div>
+
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Usuários ativos:</span>
+              <span class="font-semibold">{{ system.users }}</span>
+            </div>
+
+            <div>
+              <h4 class="font-semibold mb-2 text-sm">Funcionalidades:</h4>
+              <div class="flex flex-wrap gap-1">
+                {% for feature in system.features %}
+                <span class="inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium">{{ feature }}</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="pt-4">
+              {% if system.status == "Ativo" or system.status == "Beta" %}
+              <button class="w-full inline-flex items-center justify-center rounded-md bg-gray-900 text-white px-4 py-2 text-sm font-medium hover:bg-gray-800">
+                Acessar Sistema
+                <i data-lucide="external-link" class="ml-2 h-4 w-4"></i>
+              </button>
+              {% else %}
+              <button class="w-full rounded-md border px-4 py-2 text-sm font-medium text-gray-400 cursor-not-allowed" disabled>
+                Em Desenvolvimento
+              </button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-16 bg-blue-50 rounded-lg p-8">
+      <h2 class="text-2xl font-bold text-center mb-8">Estatísticas dos Sistemas</h2>
+      <div class="grid md:grid-cols-4 gap-6 text-center">
+        <div><div class="text-3xl font-bold text-blue-600">6</div><div class="text-gray-600">Sistemas Ativos</div></div>
+        <div><div class="text-3xl font-bold text-green-600">6.200+</div><div class="text-gray-600">Usuários Totais</div></div>
+        <div><div class="text-3xl font-bold text-purple-600">99.9%</div><div class="text-gray-600">Uptime</div></div>
+        <div><div class="text-3xl font-bold text-orange-600">24/7</div><div class="text-gray-600">Suporte</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

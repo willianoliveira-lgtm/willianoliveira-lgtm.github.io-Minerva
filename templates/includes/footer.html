@@ -1,0 +1,58 @@
+<footer class="bg-gray-900 text-white">
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Logo e descrição -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">IPU</span>
+          </div>
+          <span class="font-bold text-xl">Instituto de Pesquisa</span>
+        </div>
+        <p class="text-gray-300 mb-6 max-w-md">
+          Desenvolvemos soluções tecnológicas inovadoras através de pesquisa aplicada, conectando academia e
+          indústria para transformar conhecimento em impacto social.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="facebook" class="h-5 w-5"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="twitter" class="h-5 w-5"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="linkedin" class="h-5 w-5"></i></a>
+        </div>
+      </div>
+
+      <!-- Links rápidos -->
+      <div>
+        <h3 class="font-semibold text-lg mb-4">Links Rápidos</h3>
+        <ul class="space-y-2">
+          <li><a href="{% url 'core:equipe' %}" class="text-gray-300 hover:text-white transition-colors">Equipe</a></li>
+          <li><a href="{% url 'core:projetos' %}" class="text-gray-300 hover:text-white transition-colors">Projetos</a></li>
+          <li><a href="{% url 'core:sistemas' %}" class="text-gray-300 hover:text-white transition-colors">Sistemas</a></li>
+          <li><a href="{% url 'core:publicacoes' %}" class="text-gray-300 hover:text-white transition-colors">Publicações</a></li>
+        </ul>
+      </div>
+
+      <!-- Contato -->
+      <div>
+        <h3 class="font-semibold text-lg mb-4">Contato</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center space-x-2">
+            <i data-lucide="mail" class="h-4 w-4 text-gray-400"></i>
+            <span class="text-gray-300">contato@instituto.edu.br</span>
+          </li>
+          <li class="flex items-center space-x-2">
+            <i data-lucide="phone" class="h-4 w-4 text-gray-400"></i>
+            <span class="text-gray-300">(11) 1234-5678</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <i data-lucide="map-pin" class="h-4 w-4 text-gray-400 mt-1"></i>
+            <span class="text-gray-300">Rua da Universidade, 123<br>São Paulo, SP - 01234-567</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+      <p class="text-gray-400">&copy; {% now "Y" %} Instituto de Pesquisa Universitária. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Contato · Instituto de Pesquisa{% endblock %}
+
+{% block content %}
+<div class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Entre em Contato</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Estamos aqui para ajudar. Entre em contato conosco através dos canais abaixo ou envie uma mensagem
+        diretamente pelo formulário.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      {# ---------- Informações de contato ---------- #}
+      <div class="lg:col-span-1 space-y-6">
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h3 class="flex items-center font-semibold text-lg mb-2">
+            <i data-lucide="map-pin" class="h-5 w-5 mr-2 text-blue-600"></i> Endereço
+          </h3>
+          <p class="text-gray-600">Cidade Universitária<br>Ilha do Fundão<br>Rio de Janeiro - RJ<br>CEP: 21941-901</p>
+        </div>
+
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h3 class="flex items-center font-semibold text-lg mb-2">
+            <i data-lucide="phone" class="h-5 w-5 mr-2 text-blue-600"></i> Telefone
+          </h3>
+          <p class="text-gray-600">(21) 1234-5678<br>(21) 9876-5432</p>
+        </div>
+
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h3 class="flex items-center font-semibold text-lg mb-2">
+            <i data-lucide="mail" class="h-5 w-5 mr-2 text-blue-600"></i> E-mail
+          </h3>
+          <p class="text-gray-600">contato@instituto.edu.br<br>suporte@instituto.edu.br</p>
+        </div>
+
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h3 class="flex items-center font-semibold text-lg mb-2">
+            <i data-lucide="clock" class="h-5 w-5 mr-2 text-blue-600"></i> Horário de Atendimento
+          </h3>
+          <p class="text-gray-600">Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 12h<br>Domingo: Fechado</p>
+        </div>
+      </div>
+
+      {# ---------- Formulário de contato ---------- #}
+      <div class="lg:col-span-2">
+        <div class="rounded-lg border bg-white shadow-sm p-6">
+          <h2 class="text-xl font-semibold">Envie uma Mensagem</h2>
+          <p class="text-gray-500 text-sm mb-6">Preencha o formulário abaixo e entraremos em contato em breve.</p>
+
+          {% if messages %}
+            {% for message in messages %}
+            <div class="mb-6 rounded-md border border-green-200 bg-green-50 px-4 py-3">
+              <p class="text-green-800 text-sm">{{ message }}</p>
+            </div>
+            {% endfor %}
+          {% endif %}
+
+          {% if form.errors %}
+          <div class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3">
+            <p class="text-red-800 text-sm">Verifique os campos destacados abaixo e tente novamente.</p>
+          </div>
+          {% endif %}
+
+          <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label for="{{ form.nome.id_for_label }}" class="block text-sm font-medium mb-1">Nome completo</label>
+                {{ form.nome }}
+              </div>
+              <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium mb-1">E-mail</label>
+                {{ form.email }}
+              </div>
+            </div>
+
+            <div>
+              <label for="{{ form.assunto.id_for_label }}" class="block text-sm font-medium mb-1">Assunto</label>
+              {{ form.assunto }}
+            </div>
+
+            <div>
+              <label for="{{ form.mensagem.id_for_label }}" class="block text-sm font-medium mb-1">Mensagem</label>
+              {{ form.mensagem }}
+            </div>
+
+            <button type="submit"
+                    class="w-full inline-flex items-center justify-center rounded-md bg-gray-900 text-white px-6 py-3 text-lg font-medium hover:bg-gray-800">
+              <i data-lucide="send" class="h-4 w-4 mr-2"></i>
+              Enviar Mensagem
+            </button>
+          </form>
+        </div>
+
+        <div class="rounded-lg border bg-white shadow-sm p-6 mt-6">
+          <h2 class="text-xl font-semibold mb-4">Localização</h2>
+          <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
+            <p class="text-gray-500">Mapa da localização</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

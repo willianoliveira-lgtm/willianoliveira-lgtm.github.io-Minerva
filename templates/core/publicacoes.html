@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Publicações e Notícias · Instituto de Pesquisa{% endblock %}
+
+{% block content %}
+<div class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Publicações e Notícias</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Acompanhe nossas publicações científicas, artigos técnicos e as últimas novidades do instituto de pesquisa.
+      </p>
+    </div>
+
+    <div class="mb-8 space-y-4">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <i data-lucide="search" class="absolute left-3 top-3 h-4 w-4 text-gray-400"></i>
+          <input type="text" placeholder="Buscar publicações..."
+                 class="flex h-10 w-full rounded-md border border-gray-300 pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <button class="inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-gray-50">
+          <i data-lucide="filter" class="h-4 w-4 mr-2"></i>
+          Filtros
+        </button>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <span class="inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium cursor-pointer hover:bg-gray-100">Todos</span>
+        {% for type in types %}
+        <span class="inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium cursor-pointer hover:bg-gray-100">{{ type }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      {% for pub in publications %}
+      <div class="rounded-lg border bg-white shadow-sm hover:shadow-lg transition-shadow duration-300">
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-2">
+            <h2 class="text-xl font-semibold flex-1 pr-4">{{ pub.title }}</h2>
+            <span class="inline-flex items-center rounded-md {{ pub.type_color }} text-white px-2 py-1 text-xs font-medium whitespace-nowrap">{{ pub.type }}</span>
+          </div>
+          <p class="text-gray-600 text-base mb-4">{{ pub.description }}</p>
+
+          <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-4">
+            <div class="flex items-center"><i data-lucide="calendar" class="h-4 w-4 mr-2"></i><span>{{ pub.date }}</span></div>
+            <div class="flex items-center"><i data-lucide="user" class="h-4 w-4 mr-2"></i><span>{{ pub.authors|join:", " }}</span></div>
+          </div>
+
+          <div class="mb-4">
+            <span class="text-sm font-medium text-gray-700">Publicado em: </span>
+            <span class="text-sm text-gray-600">{{ pub.journal }}</span>
+          </div>
+
+          <div class="mb-4">
+            <span class="text-sm font-medium text-gray-700 block mb-2">Tags:</span>
+            <div class="flex flex-wrap gap-2">
+              {% for tag in pub.tags %}
+              <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <button class="inline-flex items-center justify-center rounded-md bg-gray-900 text-white px-4 py-2 text-sm font-medium hover:bg-gray-800">
+            Ler Publicação
+            <i data-lucide="external-link" class="ml-2 h-4 w-4"></i>
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-16 bg-gray-50 rounded-lg p-8">
+      <h2 class="text-2xl font-bold text-center mb-8">Estatísticas de Publicações</h2>
+      <div class="grid md:grid-cols-4 gap-6 text-center">
+        <div><div class="text-3xl font-bold text-blue-600">25</div><div class="text-gray-600">Artigos Publicados</div></div>
+        <div><div class="text-3xl font-bold text-green-600">12</div><div class="text-gray-600">Conferências</div></div>
+        <div><div class="text-3xl font-bold text-purple-600">8</div><div class="text-gray-600">Revistas Indexadas</div></div>
+        <div><div class="text-3xl font-bold text-orange-600">150+</div><div class="text-gray-600">Citações</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
