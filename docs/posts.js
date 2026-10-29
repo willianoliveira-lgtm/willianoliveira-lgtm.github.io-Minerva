@@ -5,7 +5,9 @@
    envie ao GitHub — o site atualiza sozinho.
    - slug: identificador único, sem espaços nem acentos
    - data: formato AAAA-MM-DD
-   - capa: emoji ou caminho de imagem (ex.: "img/foto.jpg")
+   - categoria: Pesquisa, Publicação, Evento, Tecnologia,
+     Aprendizagem ou Educação (cada uma tem ícone e cor próprios)
+   - imagem (opcional): caminho de uma foto, ex.: "img/foto.jpg"
    ========================================================= */
 const POSTS = [
   {
@@ -16,8 +18,6 @@ const POSTS = [
     autor: "Dra. Maria Santos",
     data: "2026-10-20",
     leitura: 6,
-    capa: "🤖",
-    cor: "#1f3160",
     destaque: true,
     conteudo: `
       <p class="lead">A chegada das ferramentas de inteligência artificial às escolas e universidades mudou a forma como estudamos. A pergunta já não é <em>se</em> vamos usá-las, mas <em>como</em>.</p>
@@ -42,8 +42,6 @@ const POSTS = [
     autor: "Equipe Minerva",
     data: "2026-10-12",
     leitura: 5,
-    capa: "📚",
-    cor: "#2d6a4f",
     conteudo: `
       <p class="lead">Pesquisas em psicologia cognitiva mostram que o cérebro guarda melhor aquilo que ele precisa <em>recuperar</em>, não apenas reler.</p>
       <h2>1. Autoteste</h2><p>Feche o livro e tente lembrar o que leu. Flashcards e questões de prova antigas são ótimos aliados.</p>
@@ -56,12 +54,10 @@ const POSTS = [
     slug: "workshop-tecnologias-emergentes",
     titulo: "Workshop de Tecnologias Emergentes abre inscrições",
     resumo: "Evento gratuito e aberto ao público reúne pesquisadores para discutir as últimas tendências em inovação.",
-    categoria: "Eventos",
+    categoria: "Evento",
     autor: "Comunicação Minerva",
     data: "2026-10-05",
     leitura: 2,
-    capa: "🎤",
-    cor: "#9c6644",
     conteudo: `
       <p class="lead">O Instituto Minerva realiza mais uma edição do Workshop de Tecnologias Emergentes, com palestras, oficinas práticas e espaço para networking.</p>
       <h2>Programação</h2>
@@ -73,12 +69,10 @@ const POSTS = [
     slug: "publicacao-revista-internacional",
     titulo: "Pesquisa do instituto é publicada em revista internacional",
     resumo: "Artigo sobre otimização de algoritmos ganha destaque e amplia a colaboração com grupos de pesquisa do exterior.",
-    categoria: "Pesquisa",
+    categoria: "Publicação",
     autor: "Dr. João Silva",
     data: "2026-09-28",
     leitura: 4,
-    capa: "🔬",
-    cor: "#5a189a",
     conteudo: `
       <p class="lead">O trabalho, desenvolvido ao longo de dois anos, propõe uma nova abordagem para reduzir o custo computacional de algoritmos de busca.</p>
       <h2>Por que isso importa</h2>
@@ -94,8 +88,6 @@ const POSTS = [
     autor: "Willian Oliveira",
     data: "2026-09-18",
     leitura: 7,
-    capa: "💡",
-    cor: "#c9a227",
     conteudo: `
       <p class="lead">Saber lidar com dinheiro é uma habilidade que se aprende — e quanto antes, melhor.</p>
       <h2>Comece pelo orçamento</h2><p>Anote tudo o que entra e sai durante um mês. Só assim dá para ver para onde o dinheiro está indo.</p>
@@ -111,8 +103,6 @@ const POSTS = [
     autor: "Comunicação Minerva",
     data: "2026-09-02",
     leitura: 3,
-    capa: "🌱",
-    cor: "#40916c",
     conteudo: `
       <p class="lead">A proposta reúne especialistas em computação, biologia e engenharia para criar modelos que antecipem riscos ambientais.</p>
       <h2>Objetivos</h2>

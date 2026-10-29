@@ -3,22 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artigos — Minerva</title>
-<meta name="description" content="Minerva — portal de educação, pesquisa e conhecimento.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+<title>Publicações e Notícias — Minerva</title>
+<meta name="description" content="Minerva — pesquisa aplicada, projetos, sistemas e publicações.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232563eb'/><text x='16' y='22' font-family='Arial' font-weight='700' font-size='16' fill='white' text-anchor='middle'>M</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="blog">
 <div id="header"></div>
-
-<section class="page-head"><div class="wrap"><h1>Artigos e notícias</h1><p>Tudo o que já foi publicado no portal.</p></div></section>
-<section class="block"><div class="wrap">
-  <div class="toolbar"><div id="chips" style="display:flex;gap:8px;flex-wrap:wrap"></div><input id="busca" class="search" type="search" placeholder="Buscar artigos..."></div>
-  <div class="grid" id="posts"></div>
+<main>
+<section class="sec gray"><div class="container">
+  <div class="page-title"><h1>Publicações e Notícias</h1><p>Artigos, notícias, eventos e conquistas da nossa equipe de pesquisa</p></div>
+  <div class="filters"><div id="chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    <label class="searchbox"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg><input id="busca" type="search" placeholder="Buscar publicações..."></label></div>
+  <div class="grid g32" id="posts"></div>
 </div></section>
-
+</main>
 <div id="footer"></div>
 <script src="posts.js"></script>
 <script src="app.js"></script>
