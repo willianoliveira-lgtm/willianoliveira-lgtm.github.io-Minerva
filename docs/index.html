@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minerva — Portal do Conhecimento</title>
+<meta name="description" content="Minerva — portal de educação, pesquisa e conhecimento.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="home">
+<div id="header"></div>
+
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">Educação · Pesquisa · Inovação</span>
+  <h1>Conhecimento que transforma, compartilhado com todos.</h1>
+  <p>Artigos, pesquisas, eventos e guias práticos para quem gosta de aprender — produzidos pela equipe e pelos colaboradores do Minerva.</p>
+  <a class="btn btn-gold" href="blog.html">Ler os artigos</a><a class="btn btn-ghost" href="sobre.html">Conheça o Minerva</a>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="sec-head"><div><h2>Em destaque</h2></div></div>
+  <div id="featured"></div>
+</div></section>
+
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div><h2>Publicações recentes</h2><p>O que há de novo no portal</p></div><a href="blog.html">Ver todos →</a></div>
+  <div class="grid" id="recent"></div>
+</div></section>
+
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div><h2>Explore o portal</h2></div></div>
+  <div class="quick">
+    <a href="projetos.html"><div class="ic">🧪</div><strong>Projetos</strong><span>Pesquisas em andamento e concluídas</span></a>
+    <a href="equipe.html"><div class="ic">👥</div><strong>Equipe</strong><span>Pesquisadores e colaboradores</span></a>
+    <a href="blog.html?cat=Eventos"><div class="ic">📅</div><strong>Eventos</strong><span>Workshops, palestras e cursos</span></a>
+    <a href="contato.html"><div class="ic">✉️</div><strong>Contato</strong><span>Fale com a nossa equipe</span></a>
+  </div>
+</div></section>
+
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="news">
+    <div><h3>Receba as novidades</h3><p style="margin:0;color:var(--muted)">Novos artigos e eventos direto no seu e-mail.</p></div>
+    <form onsubmit="event.preventDefault();location.href='mailto:'+SITE.email+'?subject=Quero%20receber%20as%20novidades&body=Meu%20e-mail:%20'+encodeURIComponent(this.email.value)">
+      <input type="email" name="email" placeholder="seu@email.com" required><button class="btn btn-gold">Inscrever</button>
+    </form>
+  </div>
+</div></section>
+
+<div id="footer"></div>
+<script src="posts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
